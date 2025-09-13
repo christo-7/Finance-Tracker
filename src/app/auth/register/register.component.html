@@ -1,0 +1,61 @@
+<div class="min-h-screen bg-blue-100 flex flex-col">
+  <!-- Logo / App Name -->
+  <div class="p-4">
+    <div class="flex items-center space-x-2">
+      <img src="assets/logo.svg" alt="logo" class="h-25 w-25" />
+      <span class="font-semibold text-lg text-blue-700">Personal Finance Tracker</span>
+    </div>
+  </div>
+
+  <!-- Centered form -->
+  <div class="flex-1 flex items-center justify-center">
+    <div class="bg-white p-6 rounded shadow w-full max-w-md">
+      <h2 class="text-2xl font-semibold mb-4">Register</h2>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label class="block mb-1 text-sm">Name</label>
+          <input formControlName="name" class="input" />
+          <div *ngIf="submitted && form.get('name')?.invalid" class="text-red-600 text-sm mt-1">
+            Name is required
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="block mb-1 text-sm">Email</label>
+          <input formControlName="email" class="input" />
+          <div *ngIf="submitted && form.get('email')?.invalid" class="text-red-600 text-sm mt-1">
+            Please enter a valid email
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="block mb-1 text-sm">Password</label>
+          <input type="password" formControlName="password" class="input" />
+          <div *ngIf="submitted && form.get('password')?.invalid" class="text-red-600 text-sm mt-1">
+            Password must be at least 6 characters
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="block mb-1 text-sm">Confirm Password</label>
+          <input type="password" formControlName="confirmPassword" class="input" />
+          <div *ngIf="submitted && form.errors?.['mismatch']" class="text-red-600 text-sm mt-1">
+            Passwords do not match
+          </div>
+        </div>
+
+        <div *ngIf="error" class="text-red-600 text-sm mb-3">{{ error }}</div>
+
+        <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700" type="submit">
+          Register
+        </button>
+
+        <p class="text-sm text-center mt-3">
+          Already have an account?
+          <a routerLink="/auth/login" class="text-blue-600">Login</a>
+        </p>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,104 @@
+<!-- Backdrop -->
+<div *ngIf="isOpen" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+  <!-- Modal -->
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
+    <h2 class="text-xl font-semibold mb-4">
+      {{ isEditMode ? 'Edit Transaction' : 'Add Transaction' }}
+    </h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- Amount -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium mb-2">Amount *</label>
+        <input 
+          type="number" 
+          step="0.01"
+          formControlName="amount" 
+          class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          [class.border-red-500]="isFieldInvalid('amount')"
+          placeholder="Enter amount"
+        />
+        <div *ngIf="isFieldInvalid('amount')" class="text-red-500 text-xs mt-1">
+          {{ getFieldError('amount') }}
+        </div>
+      </div>
+
+      <!-- Type -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium mb-2">Type *</label>
+        <select 
+          formControlName="type" 
+          class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          [class.border-red-500]="isFieldInvalid('type')"
+        >
+          <option value="Income">Income</option>
+          <option value="Expense">Expense</option>
+        </select>
+        <div *ngIf="isFieldInvalid('type')" class="text-red-500 text-xs mt-1">
+          {{ getFieldError('type') }}
+        </div>
+      </div>
+
+      <!-- Category -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium mb-2">Category *</label>
+        <select 
+          formControlName="category" 
+          class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          [class.border-red-500]="isFieldInvalid('category')"
+        >
+          <option value="" disabled>Select Category</option>
+          <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+        </select>
+        <div *ngIf="isFieldInvalid('category')" class="text-red-500 text-xs mt-1">
+          {{ getFieldError('category') }}
+        </div>
+      </div>
+
+      <!-- Date -->
+      <div class="mb-4">
+        <label class="block text-sm font-medium mb-2">Date *</label>
+        <input 
+          type="date" 
+          formControlName="date" 
+          [max]="getTodayDate()"
+          class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          [class.border-red-500]="isFieldInvalid('date')"
+        />
+        <div *ngIf="isFieldInvalid('date')" class="text-red-500 text-xs mt-1">
+          {{ getFieldError('date') }}
+        </div>
+      </div>
+
+      <!-- Description -->
+      <div class="mb-6">
+        <label class="block text-sm font-medium mb-2">Description</label>
+        <textarea 
+          formControlName="description" 
+          rows="3"
+          class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Optional notes about this transaction"
+        ></textarea>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex justify-end space-x-3">
+        <button 
+          type="button" 
+          (click)="close()" 
+          class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-200"
+        >
+          Cancel
+        </button>
+        <button 
+          type="submit" 
+          class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          [disabled]="form.invalid"
+          [class.opacity-50]="form.invalid"
+        >
+          {{ isEditMode ? 'Update' : 'Save' }} Transaction
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
