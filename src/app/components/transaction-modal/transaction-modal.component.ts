@@ -19,8 +19,8 @@ export class TransactionModalComponent implements OnInit {
 
   // Categories based on type - Updated to match requirements exactly
   typeCategories: { [key: string]: string[] } = {
-    Income: ['Salary', 'Misc'],
-    Expense: ['Food', 'Transport', 'Bills', 'Rent', 'Misc']
+    Income: ['Salary', 'Misc', 'Business', 'Investment', 'Gift', 'Other'],
+    Expense: ['Food', 'Transport', 'Bills', 'Rent', 'Misc' ,'Entertainment','Health','Education','Shopping','Travel']
   };
 
   categories: string[] = [];
